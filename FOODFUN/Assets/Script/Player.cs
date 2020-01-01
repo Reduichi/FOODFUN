@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rig;
     private Animator ani;           // 動畫控制器元件
+
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
