@@ -54,7 +54,7 @@ public class monsterattack : MonoBehaviour
             //  EnimyWalk是動畫狀態機中的行走的狀態
                 cc.SimpleMove(transform.forward*speed);
 
-                animator.SetBool("Walk ",true);     
+                animator.SetBool("monsterWalk ",true);     
                 //移動的時候播放跑步動畫
         }
 
