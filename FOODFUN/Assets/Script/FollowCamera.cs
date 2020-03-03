@@ -32,7 +32,7 @@ namespace RED
             Vector3 posP = player.position;         // 玩家
             Vector3 posC = transform.position;      // 攝影機
 
-            posP.x -= 3;        // 放在玩家後面
+            posP.x += 3;        // 放在玩家後面
             posP.y = 0;         // 固定 Y 軸
             posP.z = -10;       // 固定 Z 軸
 

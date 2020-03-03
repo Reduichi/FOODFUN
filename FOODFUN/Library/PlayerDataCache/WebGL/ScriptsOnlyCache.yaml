@@ -1,9 +1,13 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - EnemyData
+    - EnemyNear
+    - Gamemanager
+    - HpValueManager
     - Player
+    - PlayerData
     - RED.FollowCamera
-    - monsterpractice
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.Experimental.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
@@ -15,14 +19,22 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
+    - UnityEngine.UI.Image
+    - UnityEngine.UI.Text
   sceneClasses:
     "Assets/Scenes/\u5834\u666F\u4E00.unity":
     - Class: 1
@@ -38,6 +50,8 @@ ScriptsOnlyBuild:
     - Class: 48
       Script: {instanceID: 0}
     - Class: 50
+      Script: {instanceID: 0}
+    - Class: 58
       Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
@@ -62,18 +76,40 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9694}
     - Class: 114
-      Script: {instanceID: 10256}
+      Script: {instanceID: 9956}
     - Class: 114
-      Script: {instanceID: 11596}
+      Script: {instanceID: 10008}
     - Class: 114
-      Script: {instanceID: 11902}
+      Script: {instanceID: 10598}
+    - Class: 114
+      Script: {instanceID: 11206}
+    - Class: 114
+      Script: {instanceID: 11388}
+    - Class: 114
+      Script: {instanceID: 11592}
+    - Class: 114
+      Script: {instanceID: 11898}
+    - Class: 114
+      Script: {instanceID: 12458}
+    - Class: 114
+      Script: {instanceID: 17342}
+    - Class: 114
+      Script: {instanceID: 17642}
+    - Class: 114
+      Script: {instanceID: 17650}
+    - Class: 114
+      Script: {instanceID: 17668}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 212
       Script: {instanceID: 0}
     - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
       Script: {instanceID: 0}
     - Class: 223
       Script: {instanceID: 0}
@@ -178,12 +214,6 @@ ScriptsOnlyBuild:
     className: GridLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: f3d78274cd20656a235fb64ab5f2bb99
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: monsterattack
-  - hash:
-      serializedVersion: 2
       Hash: 8aa3d6ccbcb54ee8db6c1229854adaaa
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -206,12 +236,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: PhysicsRaycaster
-  - hash:
-      serializedVersion: 2
-      Hash: c9d9276006815fbf222ff51f1a96ee9d
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: monsterpractice
   - hash:
       serializedVersion: 2
       Hash: bd3cf68c8964d3c66d1c43f4f98508c9
@@ -358,13 +382,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 1c016bd6ec485fdc0513ffbd50626554
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: monsterscript
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: b7b5c84ef6d2b0848a6730ab9210b5a9
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Gamemanager
@@ -424,7 +442,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: afc5b93a7b192de2dcb3832fe35a5c7e
+      Hash: ada16f8f1530d70e6099748041b0889a
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -566,6 +584,48 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: fdc5e77640a26ce7a64efd75d7093370
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: PlayerData
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HpValueManager
+  - hash:
+      serializedVersion: 2
+      Hash: 7c9ae274be8bfe3f1cbbd43695c38678
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnemyData
+  - hash:
+      serializedVersion: 2
+      Hash: 6dc29b27667c0ea5ce58cb6312efb948
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Bullet
+  - hash:
+      serializedVersion: 2
+      Hash: 7c50d4a0391a8de44b7da9ad4ca30235
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Enemy
+  - hash:
+      serializedVersion: 2
+      Hash: 7c50d4a0391a8de44b7da9ad4ca30235
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnemyNear
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: LevelManager
   platform: 20
   scenePathNames:
   - "Assets/Scenes/\u5834\u666F\u4E00.unity"
