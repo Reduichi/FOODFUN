@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
     private void Attack()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up * data.attackY, transform.right, data.attackLength, 256);
+
         if (hit)                // 如果 計時器 < 冷卻時間
         {
             if (timer < data.cd)                // 如果 計時器 < 冷卻時間

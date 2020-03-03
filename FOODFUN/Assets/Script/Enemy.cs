@@ -5,8 +5,9 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
     [Header("怪物資料")]
-    public EnemyData data;
+    public EnemyData data;                   // 一般欄位才可以獨立使用
 
+    private float hp;
     private Animator ani;                    // 動畫控制器
     private Transform target;                // 目標變形
     private float timer;                     // 計時器
@@ -19,6 +20,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        hp = data.hpMax;
         ani = GetComponent<Animator>();
         target = GameObject.Find("玩家").transform;                   // 目標 = 尋找
         move = GetComponent<Transform>();
@@ -86,10 +88,10 @@ public class Enemy : MonoBehaviour
     {
         if (ani.GetBool("死亡開關")) return;
         StartCoroutine(AttackDelay());
-        data.hp -= damage;
-        hpValueManager.SetHP(data.hp, data.hpMax);      // 更新血量(目前，最大)
+        hp -= damage;
+        hpValueManager.SetHP(hp, data.hpMax);      // 更新血量(目前，最大)
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
-        if (data.hp <= 0) Dead();
+        if (hp <= 0) Dead();
     }
     private IEnumerator AttackDelay()
     {
@@ -101,6 +103,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Dead()
     {
+        gameObject.layer = 0;
         ani.SetBool("死亡開關", true);      // 死亡動畫
         Destroy(this);                      // Destroy(GetComponent<元件>()); 刪除元件
         Destroy(gameObject, 3f);
