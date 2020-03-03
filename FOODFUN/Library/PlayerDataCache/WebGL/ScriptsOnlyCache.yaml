@@ -18,6 +18,7 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.TileDragAndDropManager
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -618,4 +619,4 @@ ScriptsOnlyBuild:
   platform: 20
   scenePathNames:
   - "Assets/Scenes/\u95DC\u5361\u4E00.unity"
-  playerPath: C:/Users/appedu/Desktop/RED/FOODFUN/web
+  playerPath: C:/Users/appedu/Desktop/RED/FOODFUN/foodweb
