@@ -14,15 +14,15 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!player && other.name == "玩家")                         // 如果碰到.名稱 = "玩家"
+        if (!player && other.tag == "我方")              // 如果碰到.名稱 = "我方"
         {
             other.GetComponent<Player>().Hit(damage);     // 取得<玩家>().受傷(傷害值)
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         else if (player && other.tag == "敵人")
         {
             other.GetComponent<Enemy>().Hit(damage);
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

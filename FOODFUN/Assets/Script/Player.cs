@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public float speed = 1.5f;
     [Header("玩家資料")]
     public PlayerData data;
+    [Header("火球")]
+    public GameObject bullet;
 
     private Rigidbody2D rig;
     private Animator ani;                    // 動畫控制器元件
@@ -16,6 +18,7 @@ public class Player : MonoBehaviour
     private float timer;                     // 計時器
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
+    private Vector3 posBullet;               // 子彈座標
 
     private void Start()
     {
@@ -91,6 +94,21 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 生成火球
+    /// </summary>
+    public void FireBullet()
+    {
+        posBullet = transform.position + transform.right * data.attackY;                                  // 火球座標 = 玩家.座標 + 玩家右方 * Y
+        Vector3 angle = transform.eulerAngles;                                                            // 三維向量 玩家角度 = 變形.歐拉角度(0 - 360度)
+        Quaternion qua = Quaternion.Euler(angle.x + 180, angle.y, angle.z);                               // 四元角度 = 四元.歐拉() - 歐拉轉為四元角度
+        GameObject temp = Instantiate(bullet, posBullet, qua);                                            // 區域變數 = 生成(物件，座標，角度)
+        temp.GetComponent<Rigidbody>().AddForce(transform.forward * data.bulletPower);                    // 取得鋼體.推力(敵人前方 * 力道)
+        temp.AddComponent<Bullet>();                                                                      // 暫存.添加元件<泛型>
+        temp.GetComponent<Bullet>().damage = data.attack;
+        // temp.GetComponent<Bullet>().player = true;
+    }
+
+    /// <summary>
     /// 恢復血量
     /// </summary>
     /// <returns></returns>
@@ -105,7 +123,8 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position + Vector3.up * data.attackY, transform.right * data.attackLength);
-
+        // 圖示.繪製球體(中心點，半徑)
+        Gizmos.DrawSphere(posBullet, 0.1f);
     }
 }
 
