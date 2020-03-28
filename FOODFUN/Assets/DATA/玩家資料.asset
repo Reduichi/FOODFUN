@@ -19,4 +19,6 @@ MonoBehaviour:
   attackY: -0.63
   attackLength: 3.01
   attackDelay: 0
-  bulletPower: 2
+  attackfireY: 0
+  bulletPower: 300
+  attackfire: 200

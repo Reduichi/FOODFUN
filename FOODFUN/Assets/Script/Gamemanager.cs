@@ -18,4 +18,5 @@ public class Gamemanager : MonoBehaviour
         Instantiate(pineapple, pos, rot);
     }
 
+
 }

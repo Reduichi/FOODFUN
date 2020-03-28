@@ -16,13 +16,13 @@ public class Bullet : MonoBehaviour
     {
         if (!player && other.tag == "我方")              // 如果碰到.名稱 = "我方"
         {
-            other.GetComponent<Player>().Hit(damage);     // 取得<玩家>().受傷(傷害值)
-            //Destroy(gameObject);
+            other.GetComponent<Player>().Hit(damage);    // 取得<玩家>().受傷(傷害值)
+            Destroy(gameObject,3);
         }
-        else if (player && other.tag == "敵人")
+        else if (player && other.tag == "敵人")          // 如果碰到.名稱 = "敵人"
         {
-            other.GetComponent<Enemy>().Hit(damage);
-            //Destroy(gameObject);
+            other.GetComponent<Enemy>().Hit(damage);     // 取得<敵人>().受傷(傷害值)
+            Destroy(gameObject, 3);
         }
     }
 }

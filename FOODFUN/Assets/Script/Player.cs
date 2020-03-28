@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
-        ani = GetComponent<Animator>();     // 動畫控制器 = 取得文件<動畫控制器>()
+        ani = GetComponent<Animator>();                               // 動畫控制器 = 取得文件<動畫控制器>()
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
     }
 
@@ -98,14 +98,15 @@ public class Player : MonoBehaviour
     /// </summary>
     public void FireBullet()
     {
-        posBullet = transform.position + transform.right * data.attackY;                                  // 火球座標 = 玩家.座標 + 玩家右方 * Y
-        Vector3 angle = transform.eulerAngles;                                                            // 三維向量 玩家角度 = 變形.歐拉角度(0 - 360度)
-        Quaternion qua = Quaternion.Euler(angle.x + 180, angle.y, angle.z);                               // 四元角度 = 四元.歐拉() - 歐拉轉為四元角度
-        GameObject temp = Instantiate(bullet, posBullet, qua);                                            // 區域變數 = 生成(物件，座標，角度)
-        temp.GetComponent<Rigidbody>().AddForce(transform.forward * data.bulletPower);                    // 取得鋼體.推力(敵人前方 * 力道)
-        temp.AddComponent<Bullet>();                                                                      // 暫存.添加元件<泛型>
-        temp.GetComponent<Bullet>().damage = data.attack;
-        // temp.GetComponent<Bullet>().player = true;
+        ani.SetTrigger("攻擊開關");                                                           // 攻擊動畫
+        posBullet = transform.position + transform.right * data.attackfireY;                  // 火球座標 = 玩家.座標 + 玩家右方 * Y
+        Vector3 angle = transform.eulerAngles;                                                // 三維向量 玩家角度 = 變形.歐拉角度(0 - 360度)
+        Quaternion qua = Quaternion.Euler(angle.x + 180, angle.y, angle.z);                   // 四元角度 = 四元.歐拉() - 歐拉轉為四元角度
+        GameObject temp = Instantiate(bullet, posBullet, qua);                                // 區域變數 = 生成(物件，座標，角度)
+        temp.GetComponent<Rigidbody2D>().AddForce(transform.right * data.bulletPower);        // 取得鋼體.推力(玩家右方 * 力道)
+        temp.AddComponent<Bullet>();                                                          // 暫存.添加元件<泛型>
+        temp.GetComponent<Bullet>().damage = data.attackfire;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
+        temp.GetComponent<Bullet>().player = true;
     }
 
     /// <summary>
@@ -123,6 +124,8 @@ public class Player : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawRay(transform.position + Vector3.up * data.attackY, transform.right * data.attackLength);
+        // 火球座標 = 玩家.座標 + 玩家右方 * Y
+        posBullet = transform.position + transform.right * data.attackfireY;
         // 圖示.繪製球體(中心點，半徑)
         Gizmos.DrawSphere(posBullet, 0.1f);
     }
