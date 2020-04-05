@@ -5,12 +5,12 @@
 [CreateAssetMenu(fileName = "怪物資料", menuName = "RED/怪物資料")]
 public class EnemyData : ScriptableObject
 {
-    [Header("移動速度"), Range(0, 100)]
+    [Header("移動速度"), Range(0, 300)]
     public float speed;
-    [Header("血量"), Range(100, 5000)]
+    [Header("血量"), Range(100, 50000)]
     public float hp;
     public float hpMax;
-    [Header("攻擊力"), Range(10, 1000)]
+    [Header("攻擊力"), Range(10, 10000)]
     public float attack;
     [Header("冷卻時間"), Range(1, 10)]
     public float cd;
