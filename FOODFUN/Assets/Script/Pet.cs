@@ -17,15 +17,12 @@ public class Pet : MonoBehaviour
 
     [Header("走路速度")]
     public float speed;
-    [Header("變形")]
-    public Transform move;
 
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         hp = data.hpMax;
         ani = GetComponent<Animator>();
-        move = GetComponent<Transform>();
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
     }
 
@@ -41,7 +38,7 @@ public class Pet : MonoBehaviour
     {
         StartCoroutine(WalkDelay());
         ani.SetBool("走路開關", true);      // 走路
-        move.Translate(speed * Time.deltaTime, 0, 0);
+        transform.Translate(speed * Time.deltaTime, 0, 0);
     }
 
     /// <summary>
@@ -76,7 +73,7 @@ public class Pet : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up * data.attackY, transform.right, data.attackLength, 256);
 
-        if (hit)                // 如果 計時器 < 冷卻時間
+        if (hit)               
         {
             if (timer < data.cd)                // 如果 計時器 < 冷卻時間
             {
@@ -120,5 +117,17 @@ public class Pet : MonoBehaviour
         ani.SetBool("死亡開關", true);      // 死亡動畫
         Destroy(this);                      // Destroy(GetComponent<元件>()); 刪除元件
         Destroy(gameObject, 3f);
+    }
+
+    public GameObject tempEnemy;
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "敵人")
+        {
+            tempEnemy = collision.gameObject;
+
+            Wait();
+        }
     }
 }
