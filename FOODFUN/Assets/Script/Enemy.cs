@@ -15,15 +15,12 @@ public class Enemy : MonoBehaviour
 
     [Header("走路速度")]
     public float speed;
-    [Header("變形")]
-    public Transform move;
 
     private void Start()
     {
         hp = data.hpMax;
         ani = GetComponent<Animator>();
         target = GameObject.Find("玩家").transform;                   // 目標 = 尋找
-        move = GetComponent<Transform>();
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
     }
 
@@ -42,7 +39,7 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(WalkDelay());
             ani.SetBool("走路開關", true);      // 走路
-            move.Translate(-speed * Time.deltaTime, 0, 0);
+            transform.Translate(-speed * Time.deltaTime, 0, 0);
         }
     }
 
@@ -109,6 +106,7 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject, 3f);
         CreateCoin();
     }
+
 
     [Header("金幣")]
     public GameObject coin;
