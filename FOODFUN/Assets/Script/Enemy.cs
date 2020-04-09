@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     private Transform target;                // 目標變形
     private float timer;                     // 計時器
     private HpValueManager hpValueManager;   // 血條數值管理器
+    public bool Wating;//是否正在等人
 
     [Header("走路速度")]
     public float speed;
@@ -29,18 +30,15 @@ public class Enemy : MonoBehaviour
         Move();     // 呼叫移動方法
     }
 
+    /// <summary>
+    /// 移動
+    /// </summary>
     private void Move()
     {
-        if (Vector3.Distance(target.position,transform.position) < data.stopDistance)
-        {
-            Wait();                             // 等待
-        }
-        else
-        {
+        if (Wating) return;
             StartCoroutine(WalkDelay());
             ani.SetBool("走路開關", true);      // 走路
             transform.Translate(-speed * Time.deltaTime, 0, 0);
-        }
     }
 
     /// <summary>
@@ -55,12 +53,13 @@ public class Enemy : MonoBehaviour
     /// <summary>
     /// 等待
     /// </summary>
-    private void Wait()
+    public void Wait()
     {
+        Wating = true;                          //當開始等待 Wating=true
         ani.SetBool("走路開關", false);         // 等待動畫
         timer += Time.deltaTime;                // 計時器累加
-
-        if (timer >= data.cd)                    // 如果 計時器 >= 資料.冷卻
+        
+        if (timer >= data.cd)                   // 如果 計時器 >= 資料.冷卻
         {
             Attack();                           // 攻擊
         }
@@ -121,4 +120,6 @@ public class Enemy : MonoBehaviour
             Instantiate(coin, transform.position + transform.up * (-1.5f), transform.rotation);
         }
     }
+
+    
 }
