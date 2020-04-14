@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     private Transform target;                // 目標變形
     private float timer;                     // 計時器
     private HpValueManager hpValueManager;   // 血條數值管理器
-    public bool Wating;//是否正在等人
+    public bool Wating;                      // 是否正在等人
 
     [Header("走路速度")]
     public float speed;
@@ -121,5 +121,25 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    
+    public GameObject tempEnemy;
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "我方")
+        {
+            if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
+            {
+                tempEnemy = collision.gameObject;
+
+                Wait();
+            }
+            // else Wating = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Wating = false;
+    }
+
 }

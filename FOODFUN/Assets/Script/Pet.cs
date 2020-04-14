@@ -14,6 +14,7 @@ public class Pet : MonoBehaviour
     private HpValueManager hpValueManager;   // 血條數值管理器
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
+    public bool Wating;                      // 是否正在等人
 
     [Header("走路速度")]
     public float speed;
@@ -36,9 +37,10 @@ public class Pet : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        StartCoroutine(WalkDelay());
-        ani.SetBool("走路開關", true);      // 走路
-        transform.Translate(speed * Time.deltaTime, 0, 0);
+        if (Wating) return;
+            StartCoroutine(WalkDelay());
+            ani.SetBool("走路開關", true);      // 走路
+            transform.Translate(speed * Time.deltaTime, 0, 0);
     }
 
     /// <summary>
@@ -55,6 +57,7 @@ public class Pet : MonoBehaviour
     /// </summary>
     private void Wait()
     {
+        Wating = true;                          //當開始等待 Wating=true
         ani.SetBool("走路開關", false);         // 等待動畫
         timer += Time.deltaTime;                // 計時器累加
 
@@ -125,9 +128,18 @@ public class Pet : MonoBehaviour
     {
         if (collision.tag == "敵人")
         {
-            tempEnemy = collision.gameObject;
+            if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
+            {
+                tempEnemy = collision.gameObject;
 
-            Wait();
+                Wait();
+            }
+            //else Wating = false;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Wating = false;
     }
 }
