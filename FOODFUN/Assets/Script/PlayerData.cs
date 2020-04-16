@@ -14,8 +14,13 @@ public class PlayerData : ScriptableObject
     public float attackY;
     public float attackLength;
     public float attackDelay;
+    [Header("遠距離單位")]
+    public float attackY2;
+    public float attackLength2;
+    public float attackDelay2;
     [Header("遠距離火球"), Range(0, 5000)]
     public float attackfireY;
+    public float attackfireY2;
     public int bulletPower;
     public float attackfire;
 

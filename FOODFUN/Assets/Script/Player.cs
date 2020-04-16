@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();                               // 動畫控制器 = 取得文件<動畫控制器>()
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
+        Physics2D.IgnoreLayerCollision(8, 9);
     }
 
     // 固定更新 : 一秒執行50次，處理物理行為
@@ -85,12 +86,29 @@ public class Player : MonoBehaviour
             else
             {
                 timer = 0;                      // 計時器 歸零
-                ani.SetTrigger("攻擊開關");     // 攻擊動畫
+                ani.SetTrigger("攻擊開關2");     // 攻擊動畫
                 
                 hit.collider.GetComponent<Enemy>().Hit(data.attack);
             }
         }
-        
+
+        RaycastHit2D hit2 = Physics2D.Raycast(transform.position + Vector3.up * data.attackY2, transform.right, data.attackLength2, 256);
+
+        if (hit2)
+        {
+            if (timer < data.cd)                // 如果 計時器 < 冷卻時間
+            {
+                timer += Time.deltaTime;        // 計時器 累加
+            }
+            else
+            {
+                timer = 0;                      // 計時器 歸零
+                ani.SetTrigger("攻擊開關");     // 攻擊動畫
+
+                hit.collider.GetComponent<Enemy>().Hit(data.attack);
+            }
+        }
+
     }
 
     /// <summary>
@@ -128,6 +146,15 @@ public class Player : MonoBehaviour
         posBullet = transform.position + transform.right * data.attackfireY;
         // 圖示.繪製球體(中心點，半徑)
         Gizmos.DrawSphere(posBullet, 0.1f);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position + Vector3.up * data.attackY2, transform.right * data.attackLength2);
+        // 火球座標 = 玩家.座標 + 玩家右方 * Y
+        posBullet = transform.position + transform.right * data.attackfireY2;
+        // 圖示.繪製球體(中心點，半徑)
+        Gizmos.DrawSphere(posBullet, 0.1f);
     }
+
+    
 }
 

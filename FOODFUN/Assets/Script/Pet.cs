@@ -19,6 +19,8 @@ public class Pet : MonoBehaviour
     [Header("走路速度")]
     public float speed;
 
+    public bool dead;
+
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -116,6 +118,7 @@ public class Pet : MonoBehaviour
     /// </summary>
     private void Dead()
     {
+        dead = true;
         gameObject.layer = 0;
         ani.SetBool("死亡開關", true);      // 死亡動畫
         Destroy(this);                      // Destroy(GetComponent<元件>()); 刪除元件
@@ -126,20 +129,17 @@ public class Pet : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "敵人")
+        if (collision.tag == "敵人" && collision.GetComponent<Enemy>())
         {
+            if (collision.GetComponent<Enemy>().dead) Wating = false;
+
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
             {
+
                 tempEnemy = collision.gameObject;
 
                 Wait();
             }
-            //else Wating = false;
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        Wating = false;
     }
 }

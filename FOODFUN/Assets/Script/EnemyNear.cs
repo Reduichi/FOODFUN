@@ -24,7 +24,7 @@ public class EnemyNear : Enemy
         // 物理.射線(起點，方向，碰撞資訊，長度)
         if (hit)
         {
-            hit.collider.GetComponent<Player>().Hit(data.attack);
+            hit.collider.GetComponent<Pet>().Hit(data.attack);
         }
     }
 

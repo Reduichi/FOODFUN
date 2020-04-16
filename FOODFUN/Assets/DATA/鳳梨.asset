@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: "\u9CF3\u68A8"
   m_EditorClassIdentifier: 
   speed: 100
-  hp: 100
-  hpMax: 100
-  attack: 10
-  cd: 1.5
+  hp: 1000
+  hpMax: 1000
+  attack: 50
+  cd: 2
   stopDistance: 3.5
   WalkDelay: 3
   attackY: -0.33
-  attackLength: 2.63
+  attackLength: 3.53
   attackDelay: 2
   coinRange: {x: 1, y: 3}

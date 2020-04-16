@@ -15,10 +15,14 @@ MonoBehaviour:
   hp: 1000
   hpMax: 1000
   cd: 0.7
-  attack: 50
+  attack: 10
   attackY: -0.63
   attackLength: 3.01
   attackDelay: 0
+  attackY2: -0.86
+  attackLength2: 4.1
+  attackDelay2: 0
   attackfireY: 0
+  attackfireY2: 0
   bulletPower: 300
   attackfire: 200

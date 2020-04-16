@@ -17,12 +17,15 @@ public class Enemy : MonoBehaviour
     [Header("走路速度")]
     public float speed;
 
+    public bool dead;
+
     private void Start()
     {
         hp = data.hpMax;
         ani = GetComponent<Animator>();
         target = GameObject.Find("玩家").transform;                   // 目標 = 尋找
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
+        rig = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -72,8 +75,21 @@ public class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void Attack()
     {
-        ani.SetTrigger("攻擊開關");             // 攻擊動畫
-        timer = 0;                              // 歸零
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up * data.attackY, -transform.right, data.attackLength, 512);
+
+        if (hit)
+        {
+            if (timer < data.cd)                // 如果 計時器 < 冷卻時間
+            {
+                timer += Time.deltaTime;        // 計時器 累加
+            }
+            else
+            {
+                timer = 0;                      // 計時器 歸零
+                ani.SetTrigger("攻擊開關");     // 攻擊動畫
+                hit.collider.GetComponent<Pet>().Hit(data.attack);
+            }
+        }
     }
 
     /// <summary>
@@ -89,6 +105,15 @@ public class Enemy : MonoBehaviour
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
         if (hp <= 0) Dead();
     }
+
+    /// <summary>
+    /// 受傷退後
+    /// </summary>
+    public void HurtBack()
+    {
+        rig.AddForce(5,2,0);
+    }
+
     private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(data.attackDelay);
@@ -99,6 +124,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Dead()
     {
+        dead = true;
         gameObject.layer = 0;
         ani.SetBool("死亡開關", true);      // 死亡動畫
         Destroy(this);                      // Destroy(GetComponent<元件>()); 刪除元件
@@ -125,21 +151,17 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "我方")
+        if (collision.tag == "我方" && collision.GetComponent<Pet>())
         {
+
+            if (collision.GetComponent<Pet>().dead) Wating = false;
+
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
             {
                 tempEnemy = collision.gameObject;
 
                 Wait();
             }
-            // else Wating = false;
         }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        Wating = false;
-    }
-
 }
