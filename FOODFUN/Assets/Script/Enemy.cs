@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     [Header("怪物資料")]
     public EnemyData data;                   // 一般欄位才可以獨立使用
 
+    private Rigidbody2D rig;
     private float hp;
     private Animator ani;                    // 動畫控制器
     private Transform target;                // 目標變形
@@ -111,9 +112,13 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void HurtBack()
     {
-        rig.AddForce(5,2,0);
+        rig.AddForce(new Vector2(3, 2));
     }
 
+    /// <summary>
+    /// 攻擊延遲
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(data.attackDelay);
@@ -136,6 +141,9 @@ public class Enemy : MonoBehaviour
     [Header("金幣")]
     public GameObject coin;
 
+    /// <summary>
+    /// 掉落金幣
+    /// </summary>
     private void CreateCoin()
     {
         // (int) 強制轉型 - 強制將浮點數轉為整數，去小數點
@@ -149,12 +157,29 @@ public class Enemy : MonoBehaviour
 
     public GameObject tempEnemy;
 
+    /// <summary>
+    /// 碰撞器後等待
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "我方" && collision.GetComponent<Pet>())
         {
 
             if (collision.GetComponent<Pet>().dead) Wating = false;
+
+            if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
+            {
+                tempEnemy = collision.gameObject;
+
+                Wait();
+            }
+        }
+
+        else if (collision.tag == "我方" && collision.GetComponent<Player>())
+        {
+
+            if (collision.GetComponent<Player>().dead) Wating = false;
 
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
             {

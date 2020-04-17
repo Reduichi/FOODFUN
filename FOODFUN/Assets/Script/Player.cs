@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [Header("火球")]
     public GameObject bullet;
 
+    private Enemy Enemy;
     private Rigidbody2D rig;
     private Animator ani;                    // 動畫控制器元件
     private HpValueManager hpValueManager;   // 血條數值管理器
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
     private Vector3 posBullet;               // 子彈座標
+    public bool dead;
 
     private void Start()
     {
@@ -64,8 +66,9 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 死亡
     /// </summary>
-    private void Dead()
+    public void Dead()
     {
+        dead = true;
         ani.SetBool("死亡開關", true);          // 死亡動畫
         enabled = false;                        // 關閉此腳本 (this 可省略)
     }
@@ -86,8 +89,8 @@ public class Player : MonoBehaviour
             else
             {
                 timer = 0;                      // 計時器 歸零
-                ani.SetTrigger("攻擊開關2");     // 攻擊動畫
-                
+                ani.SetTrigger("攻擊開關2");    // 攻擊動畫
+                Enemy.HurtBack();
                 hit.collider.GetComponent<Enemy>().Hit(data.attack);
             }
         }
@@ -138,6 +141,9 @@ public class Player : MonoBehaviour
         hpValueManager.SetHP(data.hp, data.hpMax);      // 更新血量(目前，最大)
     }
 
+    /// <summary>
+    /// 繪製射線
+    /// </summary>
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
