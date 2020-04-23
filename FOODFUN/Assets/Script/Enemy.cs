@@ -89,6 +89,7 @@ public class Enemy : MonoBehaviour
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關");     // 攻擊動畫
                 hit.collider.GetComponent<Pet>().Hit(data.attack);
+                hit.collider.GetComponent<Player>().Hit(data.attack);
             }
         }
     }
@@ -112,7 +113,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void HurtBack()
     {
-        rig.AddForce(new Vector2(3, 2));
+        rig.AddForce(new Vector2(1000, 500));
     }
 
     /// <summary>
@@ -165,7 +166,6 @@ public class Enemy : MonoBehaviour
     {
         if (collision.tag == "我方" && collision.GetComponent<Pet>())
         {
-
             if (collision.GetComponent<Pet>().dead) Wating = false;
 
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))

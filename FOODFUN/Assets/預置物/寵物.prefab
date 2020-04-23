@@ -916,15 +916,15 @@ GameObject:
   - component: {fileID: 4474763995986138360}
   - component: {fileID: 4474763995986138366}
   - component: {fileID: 4474763995986138361}
-  - component: {fileID: 5163800591374722670}
   - component: {fileID: 4474763994606234991}
+  - component: {fileID: 5163800591374722670}
   m_Layer: 9
   m_Name: "\u5BF5\u7269"
   m_TagString: "\u6211\u65B9"
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4474763995986138363
 Transform:
   m_ObjectHideFlags: 0
@@ -1003,6 +1003,22 @@ CapsuleCollider2D:
   m_Offset: {x: -0.04, y: 0}
   m_Size: {x: 2.02, y: 4}
   m_Direction: 0
+--- !u!58 &4474763994606234991
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4474763995986138367}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!114 &5163800591374722670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1020,19 +1036,3 @@ MonoBehaviour:
   speed: 1
   dead: 0
   tempEnemy: {fileID: 0}
---- !u!58 &4474763994606234991
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4474763995986138367}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3

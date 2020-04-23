@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();                               // 動畫控制器 = 取得文件<動畫控制器>()
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
-        Physics2D.IgnoreLayerCollision(8, 9);
+        // Physics2D.IgnoreLayerCollision(8, 10);
     }
 
     // 固定更新 : 一秒執行50次，處理物理行為
@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up * data.attackY, transform.right, data.attackLength, 256);
 
+
         if (hit)               
         {
             if (timer < data.cd)                // 如果 計時器 < 冷卻時間
@@ -90,7 +91,7 @@ public class Player : MonoBehaviour
             {
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關2");    // 攻擊動畫
-                Enemy.HurtBack();
+                hit.collider.GetComponent<Enemy>().HurtBack();
                 hit.collider.GetComponent<Enemy>().Hit(data.attack);
             }
         }

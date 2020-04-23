@@ -139,6 +139,8 @@ public class Pet : MonoBehaviour
                 tempEnemy = collision.gameObject;
 
                 Wait();
+
+
             }
         }
     }
