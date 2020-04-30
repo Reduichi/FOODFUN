@@ -9,6 +9,7 @@ public class EnemyNear : Enemy
         base.Attack();
         // print("近距離單位的複寫攻擊方法。");
 
+
         StartCoroutine(AttackDelay());
 
     }

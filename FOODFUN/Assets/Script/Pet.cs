@@ -6,6 +6,8 @@ public class Pet : MonoBehaviour
 {
     [Header("寵物資料")]
     public PetData data;                     // 一般欄位才可以獨立使用
+    [Header("發射物件")]
+    public GameObject bullet;
 
     private Rigidbody2D rig;
     private float hp;
@@ -88,6 +90,8 @@ public class Pet : MonoBehaviour
             {
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關");     // 攻擊動畫
+                GameObject temp = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
+                temp.AddComponent<Move>().speed = data.bulletSpeed;
 
                 hit.collider.GetComponent<Enemy>().Hit(data.attack);
             }

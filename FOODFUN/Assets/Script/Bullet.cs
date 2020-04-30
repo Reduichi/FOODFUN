@@ -17,12 +17,12 @@ public class Bullet : MonoBehaviour
         if (!player && collision.tag == "我方")              // 如果碰到.名稱 = "我方"
         {
             collision.GetComponent<Player>().Hit(damage);    // 取得<玩家>().受傷(傷害值)
-            Destroy(gameObject, 3);
+            Destroy(gameObject);
         }
         else if (player && collision.tag == "敵人")          // 如果碰到.名稱 = "敵人"
         {
             collision.GetComponent<Enemy>().Hit(damage);     // 取得<敵人>().受傷(傷害值)
-            Destroy(gameObject, 3);
+            Destroy(gameObject);
         }
     }
 
