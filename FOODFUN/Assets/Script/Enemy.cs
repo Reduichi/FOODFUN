@@ -88,8 +88,10 @@ public class Enemy : MonoBehaviour
             {
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關");     // 攻擊動畫
+                if (hit.collider.GetComponent<Pet>())
                 hit.collider.GetComponent<Pet>().Hit(data.attack);
-                hit.collider.GetComponent<Player>().Hit(data.attack);
+                if (hit.collider.GetComponent<Player>())
+                    hit.collider.GetComponent<Player>().Hit(data.attack);
             }
         }
     }

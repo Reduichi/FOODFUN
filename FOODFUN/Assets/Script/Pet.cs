@@ -42,9 +42,9 @@ public class Pet : MonoBehaviour
     private void Move()
     {
         if (Wating) return;
-            StartCoroutine(WalkDelay());
-            ani.SetBool("走路開關", true);      // 走路
-            transform.Translate(speed * Time.deltaTime, 0, 0);
+        StartCoroutine(WalkDelay());
+        ani.SetBool("走路開關", true);      // 走路
+        transform.Translate(speed * Time.deltaTime, 0, 0);
     }
 
     /// <summary>
@@ -71,32 +71,29 @@ public class Pet : MonoBehaviour
         }
     }
 
-    // protected 保護 : 允許子類別存取，禁止外部類別存取
-    // virtual 虛擬 : 允許子類別複寫
     /// <summary>
     /// 攻擊
     /// </summary>
     protected virtual void Attack()
     {
+        timer = 0;                      // 計時器 歸零
+        ani.SetTrigger("攻擊開關");     // 攻擊動畫
+
+        StartCoroutine(DelayAttack());
+    }
+
+    private IEnumerator DelayAttack()
+    {
+        yield return new WaitForSeconds(data.attackDelay);
+
         RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up * data.attackY, transform.right, data.attackLength, 256);
 
-        if (hit)               
+        if (hit)
         {
-            if (timer < data.cd)                // 如果 計時器 < 冷卻時間
-            {
-                timer += Time.deltaTime;        // 計時器 累加
-            }
-            else
-            {
-                timer = 0;                      // 計時器 歸零
-                ani.SetTrigger("攻擊開關");     // 攻擊動畫
-                GameObject temp = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
-                temp.AddComponent<Move>().speed = data.bulletSpeed;
-
-                hit.collider.GetComponent<Enemy>().Hit(data.attack);
-            }
+            //GameObject temp = Instantiate(bullet, transform.position + transform.forward, Quaternion.identity);
+            //temp.AddComponent<Move>().speed = data.bulletSpeed;
+            hit.collider.GetComponent<Enemy>().Hit(data.attack);
         }
-        // 歸零
     }
 
     /// <summary>
@@ -139,13 +136,16 @@ public class Pet : MonoBehaviour
 
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
             {
-
                 tempEnemy = collision.gameObject;
 
                 Wait();
-
-
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position + Vector3.up * data.attackY + transform.right * 3, -transform.right * data.attackLength);
     }
 }
