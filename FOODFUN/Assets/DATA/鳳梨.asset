@@ -23,3 +23,4 @@ MonoBehaviour:
   attackLength: 3.53
   attackDelay: 2
   coinRange: {x: 1, y: 3}
+  bulletSpeed: 0

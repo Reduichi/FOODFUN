@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     public float speed = 1.5f;
     [Header("玩家資料")]
     public PlayerData data;
+    [Header("是否等待")]
+    public bool Wating;
+    [Header("是否死亡")]
+    public bool dead;
     [Header("火球")]
     public GameObject bullet;
 
@@ -20,7 +24,6 @@ public class Player : MonoBehaviour
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
     private Vector3 posBullet;               // 子彈座標
-    public bool dead;
 
     private void Start()
     {
@@ -43,10 +46,10 @@ public class Player : MonoBehaviour
     {
         ani.SetBool("走路開關", Input.GetAxisRaw("Horizontal") != 0);  // 動畫控制器.設定布林植("參數名稱",布林值)
         rig.AddForce(transform.right * Input.GetAxisRaw("Horizontal") * speed);
-
+        //當沒有在移動時 
         if (Input.GetAxisRaw("Horizontal") == 0)
         {
-            Attack();
+            Attack(); //執行攻擊方法
         }
     }
 
@@ -56,11 +59,11 @@ public class Player : MonoBehaviour
     /// <param name="damage"></param>
     public void Hit(float damage)
     {
-        if (ani.GetBool("死亡開關")) return;
+        if (dead) return;
         data.hp -= damage;
         hpValueManager.SetHP(data.hp, data.hpMax);      // 更新血量(目前，最大)
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
-        if (data.hp <= 0) Dead();
+        if (data.hp <= 0) Dead(); //如果Hp < 0 執行死亡方法
     }
 
     /// <summary>
@@ -69,10 +72,11 @@ public class Player : MonoBehaviour
     public void Dead()
     {
         dead = true;
-        ani.SetBool("死亡開關", true);          // 死亡動畫
+        ani.SetBool("死亡開關", true);          // 死亡動畫 = true
         enabled = false;                        // 關閉此腳本 (this 可省略)
     }
-
+    [Header("現在的敵人")]
+    public GameObject tempEnemy;
     /// <summary>
     /// 攻擊
     /// </summary>
@@ -80,8 +84,7 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up * data.attackY, transform.right, data.attackLength, 256);
 
-
-        if (hit)               
+        if (hit)        //如果 此射線觸碰       
         {
             if (timer < data.cd)                // 如果 計時器 < 冷卻時間
             {
@@ -91,8 +94,8 @@ public class Player : MonoBehaviour
             {
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關2");    // 攻擊動畫
-                hit.collider.GetComponent<Enemy>().HurtBack();
                 hit.collider.GetComponent<Enemy>().Hit(data.attack);
+                hit.collider.GetComponent<Enemy>().HurtBack();
             }
         }
 

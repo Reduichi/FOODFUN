@@ -8,6 +8,12 @@ public class Pet : MonoBehaviour
     public PetData data;                     // 一般欄位才可以獨立使用
     [Header("發射物件")]
     public GameObject bullet;
+    [Header("是否正在等人")]
+    public bool Wating;                      // 是否正在等人
+    [Header("走路速度")]
+    public float speed;
+    [Header("是否死亡")]
+    public bool dead;
 
     private Rigidbody2D rig;
     private float hp;
@@ -16,19 +22,14 @@ public class Pet : MonoBehaviour
     private HpValueManager hpValueManager;   // 血條數值管理器
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
-    public bool Wating;                      // 是否正在等人
 
-    [Header("走路速度")]
-    public float speed;
-
-    public bool dead;
 
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
-        hp = data.hpMax;
         ani = GetComponent<Animator>();
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
+        hp = data.hpMax; //將Hp獨立儲存
     }
 
     private void Update()
@@ -103,12 +104,16 @@ public class Pet : MonoBehaviour
     public void Hit(float damage)
     {
         if (ani.GetBool("死亡開關")) return;
-        StartCoroutine(AttackDelay());
+        StartCoroutine(AttackDelay()); //執行攻擊等待
         hp -= damage;
         hpValueManager.SetHP(hp, data.hpMax);      // 更新血量(目前，最大)
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
-        if (hp <= 0) Dead();
+        if (hp <= 0) Dead(); //如果Hp < 0 執行死亡方法
     }
+    /// <summary>
+    /// 攻擊延遲
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator AttackDelay()
     {
         yield return new WaitForSeconds(data.attackDelay);
@@ -122,23 +127,30 @@ public class Pet : MonoBehaviour
         dead = true;
         gameObject.layer = 0;
         ani.SetBool("死亡開關", true);      // 死亡動畫
-        Destroy(this);                      // Destroy(GetComponent<元件>()); 刪除元件
         Destroy(gameObject, 3f);
+        Destroy(this,0.1f);                      // Destroy(GetComponent<元件>()); 刪除元件
     }
-
+    [Header("現在的敵人")]
     public GameObject tempEnemy;
 
+    /// <summary>
+    /// 碰撞器相遇後執行等待
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "敵人" && collision.GetComponent<Enemy>())
         {
-            if (collision.GetComponent<Enemy>().dead) Wating = false;
-
+            //如果 碰撞器抓到敵人的碰撞器
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
             {
-                tempEnemy = collision.gameObject;
-
-                Wait();
+                tempEnemy = collision.gameObject;  //現在的敵人變成碰觸到的敵人
+                Wait(); //執行等待方法
+            }
+            //如果 敵人死掉了
+            if (collision.GetComponent<Enemy>().dead)
+            {
+                Wating = false; //就繼續往前走
             }
         }
     }

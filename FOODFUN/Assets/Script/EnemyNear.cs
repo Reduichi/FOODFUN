@@ -8,10 +8,7 @@ public class EnemyNear : Enemy
         // 父類別原本的敘述或演算法
         base.Attack();
         // print("近距離單位的複寫攻擊方法。");
-
-
-        StartCoroutine(AttackDelay());
-
+        //StartCoroutine(AttackDelay());
     }
 
     private IEnumerator AttackDelay()
@@ -25,6 +22,7 @@ public class EnemyNear : Enemy
         // 物理.射線(起點，方向，碰撞資訊，長度)
         if (hit)
         {
+
             hit.collider.GetComponent<Pet>().Hit(data.attack);
         }
     }
