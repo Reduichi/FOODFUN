@@ -924,7 +924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4474763995986138363
 Transform:
   m_ObjectHideFlags: 0
@@ -1032,6 +1032,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aa9d0a950fad69a43b06322fd92b0f07, type: 2}
+  bullet: {fileID: 3100381589591876316, guid: 8c9ff925ee265aa45bdc28956cdf34c3, type: 3}
   Wating: 0
   speed: 1
   dead: 0
