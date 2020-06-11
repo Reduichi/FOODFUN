@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public bool dead;
     [Header("火球")]
     public GameObject bullet;
+    public static Player instance;                     //實體化腳本物件
 
     private Enemy Enemy;
     private Rigidbody2D rig;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
         rig = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();                               // 動畫控制器 = 取得文件<動畫控制器>()
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Attack()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.up * data.attackY, transform.right, data.attackLength, 256);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, data.attackLength2, 256);
 
         if (hit)        //如果 此射線觸碰       
         {
@@ -90,32 +92,23 @@ public class Player : MonoBehaviour
             {
                 timer += Time.deltaTime;        // 計時器 累加
             }
-            else
+            //如果 時間到了 並且 射線觸碰的物體和主角距離小於3
+            else if (timer >= data.cd && hit.collider.gameObject.transform.position.x - gameObject.transform.position.x < 3)
             {
+                print("近距離攻擊");
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關2");    // 攻擊動畫
                 hit.collider.GetComponent<Enemy>().Hit(data.attack);
                 hit.collider.GetComponent<Enemy>().HurtBack();
             }
-        }
-
-        RaycastHit2D hit2 = Physics2D.Raycast(transform.position + Vector3.up * data.attackY2, transform.right, data.attackLength2, 256);
-
-        if (hit2)
-        {
-            if (timer < data.cd)                // 如果 計時器 < 冷卻時間
+            else if (timer >= data.cd && hit.collider.gameObject.transform.position.x - gameObject.transform.position.x < 6)
             {
-                timer += Time.deltaTime;        // 計時器 累加
-            }
-            else
-            {
+                print("遠距離攻擊");
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關");     // 攻擊動畫
-
                 hit.collider.GetComponent<Enemy>().Hit(data.attack);
             }
         }
-
     }
 
     /// <summary>
