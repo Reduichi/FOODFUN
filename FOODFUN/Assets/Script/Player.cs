@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public bool dead;
     [Header("火球")]
     public GameObject bullet;
+    [Header("回血冷卻時間")]
+    public float RecoveryCd;                 // 回血冷卻時間
     public static Player instance;                     //實體化腳本物件
 
     private Enemy Enemy;
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
     private Animator ani;                    // 動畫控制器元件
     private HpValueManager hpValueManager;   // 血條數值管理器
     private float timer;                     // 計時器
+    private float RecoveryTimer;             // 回血計時器
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
     private Vector3 posBullet;               // 子彈座標
@@ -88,6 +91,8 @@ public class Player : MonoBehaviour
 
         if (hit)        //如果 此射線觸碰       
         {
+            tempEnemy = hit.collider.gameObject;//現在的敵人是最先接觸的敵人
+            RecoveryTimer = 0;                  //回血計數器歸零
             if (timer < data.cd)                // 如果 計時器 < 冷卻時間
             {
                 timer += Time.deltaTime;        // 計時器 累加
@@ -98,15 +103,24 @@ public class Player : MonoBehaviour
                 print("近距離攻擊");
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關2");    // 攻擊動畫
-                hit.collider.GetComponent<Enemy>().Hit(data.attack);
-                hit.collider.GetComponent<Enemy>().HurtBack();
+                tempEnemy.GetComponent<Enemy>().Hit(data.attack);
+                tempEnemy.GetComponent<Enemy>().HurtBack();
             }
             else if (timer >= data.cd && hit.collider.gameObject.transform.position.x - gameObject.transform.position.x < 6)
             {
                 print("遠距離攻擊");
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關");     // 攻擊動畫
-                hit.collider.GetComponent<Enemy>().Hit(data.attack);
+                tempEnemy.GetComponent<Enemy>().Hit(data.attack);
+            }
+        }
+        else
+        {
+            RecoveryTimer += Time.deltaTime;
+            if (RecoveryTimer >= RecoveryCd)
+            {
+                RecoveryTimer = 0;
+                StartCoroutine(HpRecover());
             }
         }
     }
@@ -133,9 +147,9 @@ public class Player : MonoBehaviour
     /// <returns></returns>
     private IEnumerator HpRecover()
     {
-        yield return new WaitForSeconds(1f);
         data.hp += 50;
         hpValueManager.SetHP(data.hp, data.hpMax);      // 更新血量(目前，最大)
+        yield return null;
     }
 
     /// <summary>
