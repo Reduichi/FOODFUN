@@ -25,6 +25,9 @@ public class CountCoin : MonoBehaviour
     public float LevelUpNeedCoin = 250f;
     [Header("升級所增加金幣")]
     public float LevelUpAddCoin = 250f;
+    [Header("寵物一號")]
+    public GameObject Pet1;
+
     public void AddCoin()
     {
         Coin += Time.deltaTime * CoinAddtionalTime;
@@ -58,8 +61,12 @@ public class CountCoin : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+    /// <summary>
+    /// 扣除金幣並產生寵物一號
+    /// </summary>
     public void PetOnePay()
     {
         Coin -= 150;
+        Instantiate(Pet1, new Vector3(-10, -0.4f,0),Quaternion.identity);
     }
 }
