@@ -6,10 +6,11 @@ public class Gamemanager : MonoBehaviour
 {
     [Header("鳳梨")]
     public GameObject pineapple;    // GameObject 可以存放預置物以及場景上的物件
+    //public List<ta
 
     private void Start()
     {
-        InvokeRepeating("Pineapple", 0, 5f);
+        //InvokeRepeating("Pineapple", 0, 5f);
     }
     private void Pineapple()
     {
@@ -17,6 +18,10 @@ public class Gamemanager : MonoBehaviour
         Quaternion rot = new Quaternion(0, 0, 0, 0);
         Instantiate(pineapple, pos, rot);
     }
-
+    /// <summary>
+    /// 產生敵人協程
+    /// </summary>
+    /// <returns></returns>
+    //public IEnumerator CreateEnemy()
 
 }
