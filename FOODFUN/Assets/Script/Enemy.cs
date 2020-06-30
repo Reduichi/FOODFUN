@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour
         target = GameObject.Find("玩家").transform;                   // 目標 = 尋找
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
         rig = GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(8, 8);
+        Physics2D.IgnoreLayerCollision(8, 11);
     }
 
     private void Update()

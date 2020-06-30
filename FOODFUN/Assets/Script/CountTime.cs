@@ -12,6 +12,9 @@ public class CountTime : MonoBehaviour
     [Header("關卡總時間")]
     public float Leveltime;
     public static CountTime instance;
+    public Image FireBall;
+    public Button FireBallBtn;
+    public float CD = 10 ;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +25,22 @@ public class CountTime : MonoBehaviour
     void Update()
     {
         FileBar();
+        CD += Time.deltaTime;
+        if (CD >= 10)
+        {
+            FireBallBtn.interactable = true;
+        }
+        FireBall.fillAmount = CD / 10;
     }
     public void FileBar()
     {
         if (time == Leveltime) return;
         time += Time.deltaTime;
         TimeBar.fillAmount = time /Leveltime;
+    }
+    public void SkillCoolDown()
+    {
+        FireBallBtn.interactable = false;
+        CD = 0;
     }
 }

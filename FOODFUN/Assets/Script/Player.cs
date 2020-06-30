@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
         ani = GetComponent<Animator>();                               // 動畫控制器 = 取得文件<動畫控制器>()
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
         // Physics2D.IgnoreLayerCollision(8, 10);
+        Physics2D.IgnoreLayerCollision(9, 12);
     }
 
     // 固定更新 : 一秒執行50次，處理物理行為
@@ -91,8 +92,8 @@ public class Player : MonoBehaviour
 
         if (hit)        //如果 此射線觸碰       
         {
-            tempEnemy = hit.collider.gameObject;//現在的敵人是最先接觸的敵人
-            RecoveryTimer = 0;                  //回血計數器歸零
+            tempEnemy = hit.collider.gameObject;// 現在的敵人是最先接觸的敵人
+            RecoveryTimer = 0;                  // 回血計數器歸零
             if (timer < data.cd)                // 如果 計時器 < 冷卻時間
             {
                 timer += Time.deltaTime;        // 計時器 累加
@@ -104,7 +105,6 @@ public class Player : MonoBehaviour
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關2");    // 攻擊動畫
                 tempEnemy.GetComponent<Enemy>().Hit(data.attack);
-                tempEnemy.GetComponent<Enemy>().HurtBack();
             }
             else if (timer >= data.cd && hit.collider.gameObject.transform.position.x - gameObject.transform.position.x < 6)
             {
@@ -112,6 +112,7 @@ public class Player : MonoBehaviour
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關");     // 攻擊動畫
                 tempEnemy.GetComponent<Enemy>().Hit(data.attack);
+                tempEnemy.GetComponent<Enemy>().HurtBack();
             }
         }
         else
@@ -139,6 +140,7 @@ public class Player : MonoBehaviour
         temp.AddComponent<Bullet>();                                                          // 暫存.添加元件<泛型>
         temp.GetComponent<Bullet>().damage = data.attackfire;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
         temp.GetComponent<Bullet>().player = true;
+        CountTime.instance.SkillCoolDown();
     }
 
     /// <summary>
