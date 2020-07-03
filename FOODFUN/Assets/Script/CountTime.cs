@@ -11,36 +11,68 @@ public class CountTime : MonoBehaviour
     public float time;
     [Header("關卡總時間")]
     public float Leveltime;
-    public static CountTime instance;
+    [Header("火球")]
     public Image FireBall;
     public Button FireBallBtn;
-    public float CD = 10 ;
+    public float FireCD = 10 ;
+    private float FireCoolTime;
+    [Header("閃電")]
+    public Image LightningBall;
+    public Button LightningBtn;
+    public float LightningCD = 10 ;
+    private float LightningCoolTime;
+    public static CountTime instance;
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+        FireCoolTime = FireCD;
+        LightningCoolTime = LightningCD;
     }
 
     // Update is called once per frame
     void Update()
     {
         FileBar();
-        CD += Time.deltaTime;
-        if (CD >= 10)
+        //火球冷卻圖片
+        FireCoolTime += Time.deltaTime;
+        if (FireCoolTime >= FireCD)
         {
             FireBallBtn.interactable = true;
         }
-        FireBall.fillAmount = CD / 10;
+        FireBall.fillAmount = FireCoolTime / FireCD;
+
+        //閃電冷卻圖片
+        LightningCoolTime += Time.deltaTime;
+        if (LightningCoolTime >= LightningCD)
+        {
+            LightningBtn.interactable = true;
+        }
+        LightningBall.fillAmount = LightningCoolTime / LightningCD;
     }
+    /// <summary>
+    /// 控制關卡進度條
+    /// </summary>
     public void FileBar()
     {
         if (time == Leveltime) return;
         time += Time.deltaTime;
         TimeBar.fillAmount = time /Leveltime;
     }
-    public void SkillCoolDown()
+    /// <summary>
+    /// 火球技能冷卻
+    /// </summary>
+    public void FireSkillCoolDown()
     {
         FireBallBtn.interactable = false;
-        CD = 0;
+        FireCoolTime = 0;
+    }
+    /// <summary>
+    /// 閃電技能冷卻
+    /// </summary>
+    public void LightningSkillCoolDown()
+    {
+        LightningBtn.interactable = false;
+        LightningCoolTime = 0;
     }
 }

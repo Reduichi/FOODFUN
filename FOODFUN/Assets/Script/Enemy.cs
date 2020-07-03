@@ -12,6 +12,8 @@ public class Enemy : MonoBehaviour
     public float speed;
     [Header("是否死亡")]
     public bool dead;
+    [Header("被燒傷")]
+    public bool Fired;
 
     private Rigidbody2D rig;
     private float hp;
@@ -34,6 +36,15 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         Move();     // 呼叫移動方法
+        if (Fired)
+        {
+            StartCoroutine(FiredEnd());
+        }
+    }
+    private IEnumerator FiredEnd()
+    {
+        yield return new WaitForSeconds(3f);
+        Fired = false;
     }
 
     /// <summary>
@@ -133,7 +144,8 @@ public class Enemy : MonoBehaviour
     private void Dead()
     {
         dead = true; //是否死亡 = true
-        gameObject.layer = 0;
+        gameObject.layer = 8;
+        WinGame.instance.Count += 1;
         ani.SetBool("死亡開關", true);      // 死亡動畫 = true
         Destroy(gameObject, 3f);            // 在3秒後刪除遊戲物件
         CreateCoin();
@@ -177,6 +189,14 @@ public class Enemy : MonoBehaviour
         {
             if (collision.GetComponent<Player>().dead) Wating = false;
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
+            {
+                tempEnemy = collision.gameObject;
+                Wait();
+            }
+        }
+        if (collision.tag == "我方" && collision.GetComponent<Castle>())
+        {
+            if (collision.GetType().Equals(typeof(BoxCollider2D)))
             {
                 tempEnemy = collision.gameObject;
                 Wait();

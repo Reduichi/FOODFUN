@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
     /// </summary>
     public bool player;
 
+    public float SaveTime = 0;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!player && collision.tag == "我方")              // 如果碰到.名稱 = "我方"
@@ -21,10 +23,21 @@ public class Bullet : MonoBehaviour
         }
         else if (player && collision.tag == "敵人")          // 如果碰到.名稱 = "敵人"
         {
+            if (collision.GetComponent<Enemy>().Fired == false)
+            {
             collision.GetComponent<Enemy>().Hit(damage);     // 取得<敵人>().受傷(傷害值)
+            collision.GetComponent<Enemy>().Fired = true;
+            }
+        }
+    }
+    private void Update()
+    {
+        SaveTime += Time.deltaTime;
+        if (SaveTime > 1.5f)
+        {
             Destroy(gameObject);
         }
     }
 
-   
+
 }

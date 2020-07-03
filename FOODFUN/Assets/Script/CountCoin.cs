@@ -9,8 +9,8 @@ public class CountCoin : MonoBehaviour
     public Text CoinText;
     [Header("升級文字介面")]
     public Text LevelText;
-    [Header("升級按鈕")]
-    public Button LevelUpBtn;
+    [Header("升級按鈕物件")]
+    public GameObject LevelUpObject;
     [Header("現在金幣數量")]
     public float Coin = 0;
     [Header("金幣累加的頻率")]
@@ -27,17 +27,39 @@ public class CountCoin : MonoBehaviour
     public float LevelUpAddCoin = 250f;
     [Header("寵物一號")]
     public GameObject Pet1;
-
+    public static CountCoin instance;
+    private void Start()
+    {
+        instance = this;
+    }
+    /// <summary>
+    /// 增加金幣
+    /// </summary>
     public void AddCoin()
     {
+        //金幣加速度 = 時間流動 * 金幣增加速度
         Coin += Time.deltaTime * CoinAddtionalTime;
+        //金幣 = 範圍介於 0 與 最大金幣之間
         Coin = Mathf.Clamp(Coin, 0, MaxCoin);
+    }
+    public void LevelBtnActive()
+    {
+        if (Level == 10) return;
+        if (Coin > LevelUpNeedCoin)
+        {
+            LevelUpObject.SetActive(true);
+        }
+        else LevelUpObject.SetActive(false);
     }
     private void Update()
     {
         AddCoin();
+        LevelBtnActive();
         CoinText.text = (int)Coin+"/" + MaxCoin;
     }
+    /// <summary>
+    /// 等級提升
+    /// </summary>
     public void LevelUp()
     {
         if (Coin > LevelUpNeedCoin)
@@ -50,15 +72,6 @@ public class CountCoin : MonoBehaviour
         if (Level == 10)
         {
             LevelText.text = "滿等";
-            LevelUpBtn.interactable = false;
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.name == "金幣(Clone)")
-        {
-            Coin += 50;
-            Destroy(collision.gameObject);
         }
     }
     /// <summary>
