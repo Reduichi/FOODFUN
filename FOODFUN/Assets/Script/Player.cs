@@ -15,8 +15,13 @@ public class Player : MonoBehaviour
     public bool dead;
     [Header("火球")]
     public GameObject bullet;
+    [Header("閃電")]
+    public GameObject Lightning1, Lightning2;
+    public GameObject LightningBall;
     [Header("回血冷卻時間")]
     public float RecoveryCd;                 // 回血冷卻時間
+    [Header("是不是輸了")]
+    public bool LoseTheGame;
     public static Player instance;                     //實體化腳本物件
 
     private Enemy Enemy;
@@ -27,6 +32,7 @@ public class Player : MonoBehaviour
     private float RecoveryTimer;             // 回血計時器
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
+    private Vector3 LightningPos1, LightningPos2;            // 閃電座標
     private Vector3 posBullet;               // 子彈座標
 
     private void Start()
@@ -79,6 +85,7 @@ public class Player : MonoBehaviour
     {
         dead = true;
         ani.SetBool("死亡開關", true);          // 死亡動畫 = true
+        LoseTheGame = true;
         enabled = false;                        // 關閉此腳本 (this 可省略)
     }
     [Header("現在的敵人")]
@@ -140,9 +147,30 @@ public class Player : MonoBehaviour
         temp.AddComponent<Bullet>();                                                          // 暫存.添加元件<泛型>
         temp.GetComponent<Bullet>().damage = data.attackfire;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
         temp.GetComponent<Bullet>().player = true;
-        CountTime.instance.SkillCoolDown();
+        CountTime.instance.FireSkillCoolDown();
     }
-
+    public void CreateLightning()
+    {
+        StartCoroutine(LightingBall());
+    }
+    /// <summary>
+    /// 生成閃電
+    /// </summary>
+    public IEnumerator LightingBall()
+    {
+        ani.SetTrigger("攻擊開關");
+        LightningPos1 = transform.position + transform.up * 6 + transform.right * 10f;
+        LightningPos2 = transform.position + transform.up * 3 + transform.right * 10f;
+        Quaternion qua = Quaternion.Euler(0, 0, -36.84f);
+        GameObject Temp1 = Instantiate(Lightning1, LightningPos1, qua);
+        Destroy(Temp1, 0.5f);
+        yield return new WaitForSeconds(0.2f);
+        GameObject Temp2 = Instantiate(Lightning2, LightningPos2, qua);
+        Temp2.AddComponent<Bullet>();                                                          // 暫存.添加元件<泛型>
+        Temp2.GetComponent<Bullet>().damage = data.attackfire;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
+        Temp2.GetComponent<Bullet>().player = true;
+        CountTime.instance.LightningSkillCoolDown();
+    }
     /// <summary>
     /// 恢復血量
     /// </summary>
@@ -173,7 +201,18 @@ public class Player : MonoBehaviour
         // 圖示.繪製球體(中心點，半徑)
         Gizmos.DrawSphere(posBullet, 0.1f);
     }
+    /// <summary>
+    /// 撿到錢 增加金幣
+    /// </summary>
+    /// <param name="collision"></param>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name == "金幣(Clone)")
+        {
+            CountCoin.instance.Coin += 50;
+            Destroy(collision.gameObject);
+        }
+    }
 
-    
 }
 
