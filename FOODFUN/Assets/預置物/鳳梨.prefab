@@ -419,6 +419,8 @@ MonoBehaviour:
   Wating: 0
   speed: 1
   dead: 0
+  Fired: 0
+  timer: 0
   coin: {fileID: 2320950315709511103, guid: e5a3ed0d5698f824387af0d77fa1c7ce, type: 3}
   tempEnemy: {fileID: 0}
 --- !u!58 &4036437787226222782
@@ -436,7 +438,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.77, y: 0}
   serializedVersion: 2
-  m_Radius: 3.5
+  m_Radius: 7.5
 --- !u!70 &550343193
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

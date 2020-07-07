@@ -79,7 +79,10 @@ public class CountCoin : MonoBehaviour
     /// </summary>
     public void PetOnePay()
     {
+        if (Coin>150)
+        {
         Coin -= 150;
         Instantiate(Pet1, new Vector3(-10, -0.4f,0),Quaternion.identity);
+        }
     }
 }

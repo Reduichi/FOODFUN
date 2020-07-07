@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     private float hp;
     private Animator ani;                    // 動畫控制器
     private Transform target;                // 目標變形
-    private float timer;                     // 計時器
+    public float timer;                     // 計時器
     private HpValueManager hpValueManager;   // 血條數值管理器
 
     private void Start()
@@ -94,13 +94,18 @@ public class Enemy : MonoBehaviour
         {
             timer = 0;                      // 計時器 歸零
             ani.SetTrigger("攻擊開關");     // 攻擊動畫
+            print("射線碰到城堡了");
 
-            if (hit.collider.GetComponent<Pet>())     //如果抓到寵物就打寵物
+            if (hit.collider.GetComponent<Castle>())  //如果抓到城堡就打城堡
+            {
+                hit.collider.GetComponent<Castle>().Hit(data.attack);
+            }
+            else if (hit.collider.GetComponent<Pet>())     //如果抓到寵物就打寵物
             {
                 hit.collider.GetComponent<Pet>().Hit(data.attack);
             }
 
-            if (hit.collider.GetComponent<Player>())  //如果抓到玩家就打玩家
+            else if (hit.collider.GetComponent<Player>())  //如果抓到玩家就打玩家
             {
                 hit.collider.GetComponent<Player>().Hit(data.attack);
             }
@@ -145,10 +150,10 @@ public class Enemy : MonoBehaviour
     {
         dead = true; //是否死亡 = true
         gameObject.layer = 8;
-        WinGame.instance.Count += 1;
         ani.SetBool("死亡開關", true);      // 死亡動畫 = true
         Destroy(gameObject, 3f);            // 在3秒後刪除遊戲物件
         CreateCoin();
+        WinGame.instance.Count += 1;
         Destroy(this,0.1f);                 // Destroy(GetComponent<元件>()); 刪除元件
     }
     [Header("金幣")]
@@ -175,7 +180,17 @@ public class Enemy : MonoBehaviour
     /// <param name="collision"></param>
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "我方" && collision.GetComponent<Pet>())
+        if (collision.tag == "我方" && collision.GetComponent<Castle>())
+        {
+            print("碰到城堡了");
+            if (collision.GetType().Equals(typeof(BoxCollider2D)))
+            {
+                print("真的碰到城堡了");
+                tempEnemy = collision.gameObject;
+                Wait();
+            }
+        }
+        else if (collision.tag == "我方" && collision.GetComponent<Pet>())
         {
             if (collision.GetComponent<Pet>().dead) Wating = false;
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
@@ -185,7 +200,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        if (collision.tag == "我方" && collision.GetComponent<Player>())
+        else if (collision.tag == "我方" && collision.GetComponent<Player>())
         {
             if (collision.GetComponent<Player>().dead) Wating = false;
             if (collision.GetType().Equals(typeof(CapsuleCollider2D)))
@@ -194,13 +209,9 @@ public class Enemy : MonoBehaviour
                 Wait();
             }
         }
-        if (collision.tag == "我方" && collision.GetComponent<Castle>())
+        else if (collision != tempEnemy)
         {
-            if (collision.GetType().Equals(typeof(BoxCollider2D)))
-            {
-                tempEnemy = collision.gameObject;
-                Wait();
-            }
+            Wating = false;
         }
     }
 }

@@ -35,6 +35,15 @@ public class Pet : MonoBehaviour
     private void Update()
     {
         Move();     // 呼叫移動方法
+        ClampPet();
+    }
+    /// <summary>
+    /// 限制寵物走位
+    /// </summary>
+    public void ClampPet()
+    {
+        Vector3 posP = gameObject.transform.position;         // 玩家
+        transform.position = new Vector2(posP.x = Mathf.Clamp(posP.x, -10, 25), transform.position.y);    // 玩家.x 夾住 左方限制 ~ 右方限制
     }
 
     /// <summary>
@@ -124,6 +133,7 @@ public class Pet : MonoBehaviour
     /// </summary>
     private void Dead()
     {
+        if (dead) return;
         dead = true;
         gameObject.layer = 0;
         ani.SetBool("死亡開關", true);      // 死亡動畫

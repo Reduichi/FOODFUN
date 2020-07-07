@@ -19,17 +19,18 @@ public class Player : MonoBehaviour
     public GameObject Lightning1, Lightning2;
     public GameObject LightningBall;
     [Header("回血冷卻時間")]
-    public float RecoveryCd;                 // 回血冷卻時間
+    public float RecoveryCd = 1;                 // 回血冷卻時間
+    public float RecoveryTimer;             // 回血計時器
     [Header("是不是輸了")]
     public bool LoseTheGame;
     public static Player instance;                     //實體化腳本物件
 
+    public float Hp;
     private Enemy Enemy;
     private Rigidbody2D rig;
     private Animator ani;                    // 動畫控制器元件
     private HpValueManager hpValueManager;   // 血條數值管理器
     private float timer;                     // 計時器
-    private float RecoveryTimer;             // 回血計時器
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
     private Vector3 LightningPos1, LightningPos2;            // 閃電座標
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         instance = this;
+        Hp = data.hpMax;
         rig = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();                               // 動畫控制器 = 取得文件<動畫控制器>()
         hpValueManager = GetComponentInChildren<HpValueManager>();    // 取得子物件元件
@@ -49,6 +51,17 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        HpRecoverSystem();
+        ClampPlayer();
+    }
+
+    /// <summary>
+    /// 限制玩家走位
+    /// </summary>
+    public void ClampPlayer()
+    { 
+        Vector3 posP = gameObject.transform.position;         // 玩家
+        transform.position = new Vector2( posP.x = Mathf.Clamp(posP.x, -10, 25),transform.position.y);    // 玩家.x 夾住 左方限制 ~ 右方限制
     }
 
     /// <summary>
@@ -72,10 +85,10 @@ public class Player : MonoBehaviour
     public void Hit(float damage)
     {
         if (dead) return;
-        data.hp -= damage;
-        hpValueManager.SetHP(data.hp, data.hpMax);      // 更新血量(目前，最大)
+        Hp -= damage;
+        hpValueManager.SetHP(Hp, data.hpMax);      // 更新血量(目前，最大)
         StartCoroutine(hpValueManager.ShowValue(damage, "-", Color.white));
-        if (data.hp <= 0) Dead(); //如果Hp < 0 執行死亡方法
+        if (Hp <= 0) Dead(); //如果Hp < 0 執行死亡方法
     }
 
     /// <summary>
@@ -122,14 +135,18 @@ public class Player : MonoBehaviour
                 tempEnemy.GetComponent<Enemy>().HurtBack();
             }
         }
-        else
+
+    }
+    /// <summary>
+    /// 自動回血系統
+    /// </summary>
+    public void HpRecoverSystem()
+    {
+        RecoveryTimer += Time.deltaTime;
+        if (RecoveryTimer >= RecoveryCd) 
         {
-            RecoveryTimer += Time.deltaTime;
-            if (RecoveryTimer >= RecoveryCd)
-            {
-                RecoveryTimer = 0;
-                StartCoroutine(HpRecover());
-            }
+            RecoveryTimer = 0;
+            StartCoroutine(HpRecover());
         }
     }
 
@@ -159,15 +176,15 @@ public class Player : MonoBehaviour
     public IEnumerator LightingBall()
     {
         ani.SetTrigger("攻擊開關");
-        LightningPos1 = transform.position + transform.up * 6 + transform.right * 10f;
-        LightningPos2 = transform.position + transform.up * 3 + transform.right * 10f;
+        LightningPos1 = transform.position + transform.up * 6 + transform.right * 5f;
+        LightningPos2 = transform.position + transform.up * 3 + transform.right * 5f;
         Quaternion qua = Quaternion.Euler(0, 0, -36.84f);
         GameObject Temp1 = Instantiate(Lightning1, LightningPos1, qua);
         Destroy(Temp1, 0.5f);
         yield return new WaitForSeconds(0.2f);
         GameObject Temp2 = Instantiate(Lightning2, LightningPos2, qua);
         Temp2.AddComponent<Bullet>();                                                          // 暫存.添加元件<泛型>
-        Temp2.GetComponent<Bullet>().damage = data.attackfire;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
+        Temp2.GetComponent<Bullet>().damage = data.attackfire*2;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
         Temp2.GetComponent<Bullet>().player = true;
         CountTime.instance.LightningSkillCoolDown();
     }
@@ -177,8 +194,8 @@ public class Player : MonoBehaviour
     /// <returns></returns>
     private IEnumerator HpRecover()
     {
-        data.hp += 50;
-        hpValueManager.SetHP(data.hp, data.hpMax);      // 更新血量(目前，最大)
+        Hp += 50;
+        hpValueManager.SetHP(Hp, data.hpMax);      // 更新血量(目前，最大)
         yield return null;
     }
 
