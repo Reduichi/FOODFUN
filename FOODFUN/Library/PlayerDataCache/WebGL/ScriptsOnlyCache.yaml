@@ -36,8 +36,10 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -791,4 +793,4 @@ ScriptsOnlyBuild:
   platform: 20
   scenePathNames:
   - "Assets/Scenes/\u95DC\u5361\u4E00.unity"
-  playerPath: C:/Users/appedu/Desktop/Red/FOODFUN/webplay
+  playerPath: C:/Users/appedu/Desktop/Red/FOODFUN/playweb
