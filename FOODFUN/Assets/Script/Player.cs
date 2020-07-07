@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
     private Vector3 LightningPos1, LightningPos2;            // 閃電座標
     private Vector3 posBullet;               // 子彈座標
+    public bool LostTheGame;
+    public GameObject LostSprite;
 
     private void Start()
     {
@@ -100,7 +102,9 @@ public class Player : MonoBehaviour
         ani.SetBool("死亡開關", true);          // 死亡動畫 = true
         LoseTheGame = true;
         enabled = false;                        // 關閉此腳本 (this 可省略)
+        LostSprite.SetActive(true);
     }
+
     [Header("現在的敵人")]
     public GameObject tempEnemy;
     /// <summary>

@@ -36,10 +36,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -582,7 +580,7 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 54be2e4a5350dab3feb0d48dcdbc2453
+      Hash: 63f37dc9d68a246e5977edaddcfd0cf6
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -793,4 +791,4 @@ ScriptsOnlyBuild:
   platform: 20
   scenePathNames:
   - "Assets/Scenes/\u95DC\u5361\u4E00.unity"
-  playerPath: C:/Users/appedu/Desktop/Red/FOODFUN/Web
+  playerPath: C:/Users/appedu/Desktop/Red/FOODFUN/webplay
