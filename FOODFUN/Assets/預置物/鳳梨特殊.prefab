@@ -421,7 +421,7 @@ MonoBehaviour:
   dead: 0
   Fired: 0
   timer: 0
-  coin: {fileID: 4279373854469786832, guid: 6abd8639338381f41ab871f1cd42f9e1, type: 3}
+  coin: {fileID: 2470905713578223635, guid: cac7a4ab38a206c44b21378dacd9f3a8, type: 3}
   tempEnemy: {fileID: 0}
 --- !u!58 &4036437787226222782
 CircleCollider2D:
