@@ -6,12 +6,7 @@ public class Bullet : MonoBehaviour
     /// 子彈的傷害值
     /// </summary>
     public float damage;
-
-    /// <summary>
-    /// 是否為玩家的武器，true 玩家的 ， false 敵人的
-    /// </summary>
     public bool player;
-
     public float SaveTime = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,8 +20,9 @@ public class Bullet : MonoBehaviour
         {
             if (collision.GetComponent<Enemy>().Fired == false)
             {
-            collision.GetComponent<Enemy>().Hit(damage);     // 取得<敵人>().受傷(傷害值)
-            collision.GetComponent<Enemy>().Fired = true;
+                print("有燒到人");
+                collision.GetComponent<Enemy>().Hit(damage);     // 取得<敵人>().受傷(傷害值)
+                collision.GetComponent<Enemy>().Fired = true;
             }
         }
     }

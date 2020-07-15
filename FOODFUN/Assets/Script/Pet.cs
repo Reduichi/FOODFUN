@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;       // 引用 人工智慧 API
 using System.Collections;
 

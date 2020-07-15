@@ -10,6 +10,8 @@ public class PlayerData : ScriptableObject
     public float cd = 1f;
     [Header("攻擊力"), Range(10, 1000)]
     public float attack;
+    public float FireBall;
+    public float Lightning;
     [Header("近距離單位")]
     public float attackY;
     public float attackLength;
@@ -23,5 +25,9 @@ public class PlayerData : ScriptableObject
     public float attackfireY2;
     public int bulletPower;
     public float attackfire;
+    [Header("金錢需求")]
+    public int PlayerNeed;
+    public int FireNeed;
+    public int LightningNeed;
 
 }

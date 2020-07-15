@@ -23,4 +23,6 @@ public class PetData : ScriptableObject
     public float attackDelay;
     [Header("子彈速度"), Range(1, 50)]
     public float bulletSpeed;
+    [Header("升級需求金錢")]
+    public int Need;
 }

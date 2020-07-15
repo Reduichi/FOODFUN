@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: "\u5BF5\u72691\u865F"
   m_EditorClassIdentifier: 
   speed: 100
-  hp: 1000
-  hpMax: 1000
-  attack: 100
+  hp: 3000
+  hpMax: 3000
+  attack: 200
   cd: 2
   stopDistance: 3
   WalkDelay: 3
@@ -23,3 +23,4 @@ MonoBehaviour:
   attackLength: 3.4
   attackDelay: 0.8
   bulletSpeed: 0
+  Need: 800

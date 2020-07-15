@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;      // 引用 查詢 API - MinMax 與 ToList
 using System.Collections;
 
@@ -17,14 +18,10 @@ public class Player : MonoBehaviour
     public GameObject bullet;
     [Header("閃電")]
     public GameObject Lightning1, Lightning2;
-    public GameObject LightningBall;
     [Header("回血冷卻時間")]
     public float RecoveryCd = 1;                 // 回血冷卻時間
     public float RecoveryTimer;             // 回血計時器
-    [Header("是不是輸了")]
-    public bool LoseTheGame;
     public static Player instance;                     //實體化腳本物件
-
     public float Hp;
     private Enemy Enemy;
     private Rigidbody2D rig;
@@ -35,7 +32,6 @@ public class Player : MonoBehaviour
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
     private Vector3 LightningPos1, LightningPos2;            // 閃電座標
     private Vector3 posBullet;               // 子彈座標
-    public bool LostTheGame;
     public GameObject LostSprite;
 
     private void Start()
@@ -100,9 +96,19 @@ public class Player : MonoBehaviour
     {
         dead = true;
         ani.SetBool("死亡開關", true);          // 死亡動畫 = true
-        LoseTheGame = true;
+        Lose();
+    }
+    public void Lose()
+    {
         enabled = false;                        // 關閉此腳本 (this 可省略)
         LostSprite.SetActive(true);
+    }
+    /// <summary>
+    /// 進入升級介面
+    /// </summary>
+    public void GetInUpgrade()
+    {
+        SceneManager.LoadScene("升級介面");
     }
 
     [Header("現在的敵人")]
@@ -141,6 +147,7 @@ public class Player : MonoBehaviour
         }
 
     }
+
     /// <summary>
     /// 自動回血系統
     /// </summary>
@@ -187,9 +194,7 @@ public class Player : MonoBehaviour
         Destroy(Temp1, 0.5f);
         yield return new WaitForSeconds(0.2f);
         GameObject Temp2 = Instantiate(Lightning2, LightningPos2, qua);
-        Temp2.AddComponent<Bullet>();                                                          // 暫存.添加元件<泛型>
-        Temp2.GetComponent<Bullet>().damage = data.attackfire*2;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
-        Temp2.GetComponent<Bullet>().player = true;
+        Temp2.AddComponent<Lightning>();                                                            // 暫存.添加元件<泛型>
         CountTime.instance.LightningSkillCoolDown();
     }
     /// <summary>
@@ -230,7 +235,8 @@ public class Player : MonoBehaviour
     {
         if (collision.name == "金幣(Clone)")
         {
-            CountCoin.instance.Coin += 50;
+            CountCoin.instance.Coin += 100;
+            Gamemanager.instance.RealMoney += 50;
             Destroy(collision.gameObject);
         }
     }

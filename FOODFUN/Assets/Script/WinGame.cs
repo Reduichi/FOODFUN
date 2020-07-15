@@ -22,7 +22,6 @@ public class WinGame : MonoBehaviour
         if (WinTheGame)
         {
             WinSprite.SetActive(true);
-
         }
     }
     /// <summary>

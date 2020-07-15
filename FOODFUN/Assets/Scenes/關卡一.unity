@@ -882,6 +882,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pineapple: {fileID: 8196413766400513587, guid: d4982afa2272ba44297e5aa67dff2f3d,
     type: 3}
+  RealMoney: 0
+  TheMoneyText1: {fileID: 0}
+  TheMoneyText2: {fileID: 0}
+  TheMoneyText3: {fileID: 0}
 --- !u!114 &463438853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2003,8 +2007,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 463438856}
-        m_MethodName: Replay
+      - m_Target: {fileID: 439369293}
+        m_MethodName: GetInUpgrade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2172,6 +2176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CastleLife: {fileID: 1131663680}
+  CastleMaxLife: 0
   Hp: 5000
 --- !u!1 &1109565857
 GameObject:
@@ -2662,8 +2667,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 463438856}
-        m_MethodName: Replay
+      - m_Target: {fileID: 439369293}
+        m_MethodName: GetInUpgrade
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4507,6 +4512,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8960559689924206114, guid: 58d1bdbae849d8a478726aabcb46deab,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8960559690078305672, guid: 58d1bdbae849d8a478726aabcb46deab,
         type: 3}
       propertyPath: m_Name

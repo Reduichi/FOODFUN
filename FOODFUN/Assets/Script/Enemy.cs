@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     public bool dead;
     [Header("被燒傷")]
     public bool Fired;
+    [Header("現在的敵人")]
+    public GameObject tempEnemy;
 
     private Rigidbody2D rig;
     private float hp;
@@ -81,8 +83,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // protected 保護 : 允許子類別存取，禁止外部類別存取
-    // virtual 虛擬 : 允許子類別複寫
     /// <summary>
     /// 攻擊
     /// </summary>
@@ -171,8 +171,6 @@ public class Enemy : MonoBehaviour
             Instantiate(coin, transform.position + transform.up * (-1.5f), transform.rotation);
         }
     }
-    [Header("現在的敵人")]
-    public GameObject tempEnemy;
 
     /// <summary>
     /// 碰撞器後等待

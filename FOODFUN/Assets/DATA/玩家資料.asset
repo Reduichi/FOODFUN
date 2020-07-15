@@ -15,7 +15,9 @@ MonoBehaviour:
   hp: 1000
   hpMax: 1000
   cd: 1
-  attack: 200
+  attack: 300
+  FireBall: 200
+  Lightning: 300
   attackY: -0.63
   attackLength: 3
   attackDelay: 1
@@ -26,3 +28,6 @@ MonoBehaviour:
   attackfireY2: 0
   bulletPower: 300
   attackfire: 200
+  PlayerNeed: 1000
+  FireNeed: 1000
+  LightningNeed: 1000
