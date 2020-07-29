@@ -104,6 +104,14 @@ public class Player : MonoBehaviour
         LostSprite.SetActive(true);
     }
     /// <summary>
+    /// 成功並進入升級介面
+    /// </summary>
+    public void SucGetInUpgrade()
+    {
+        Player.instance.data.Stage++;
+        SceneManager.LoadScene("升級介面");
+    }
+    /// <summary>
     /// 進入升級介面
     /// </summary>
     public void GetInUpgrade()
@@ -236,7 +244,7 @@ public class Player : MonoBehaviour
         if (collision.name == "金幣(Clone)")
         {
             CountCoin.instance.Coin += 100;
-            Gamemanager.instance.RealMoney += 50;
+            data.RealMoney += 100;
             Destroy(collision.gameObject);
         }
     }

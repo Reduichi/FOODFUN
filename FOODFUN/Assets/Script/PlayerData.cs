@@ -29,5 +29,7 @@ public class PlayerData : ScriptableObject
     public int PlayerNeed;
     public int FireNeed;
     public int LightningNeed;
+    public int Stage;
+    public int RealMoney;
 
 }

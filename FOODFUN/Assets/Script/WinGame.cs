@@ -24,11 +24,4 @@ public class WinGame : MonoBehaviour
             WinSprite.SetActive(true);
         }
     }
-    /// <summary>
-    /// 重玩一次
-    /// </summary>
-    public void Replay()
-    {
-        SceneManager.LoadScene("關卡一");
-    }
 }

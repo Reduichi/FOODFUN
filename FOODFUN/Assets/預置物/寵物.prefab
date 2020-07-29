@@ -1018,7 +1018,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 5
 --- !u!114 &5163800591374722670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,8 +1032,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: aa9d0a950fad69a43b06322fd92b0f07, type: 2}
-  bullet: {fileID: 3100381589591876316, guid: 8c9ff925ee265aa45bdc28956cdf34c3, type: 3}
   Wating: 0
   speed: 1
   dead: 0
+  ani: {fileID: 0}
+  timer: 0
   tempEnemy: {fileID: 0}
+  bullet: {fileID: 0}
+  ShootPosY: 0

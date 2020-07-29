@@ -7,8 +7,6 @@ public class Pet : MonoBehaviour
 {
     [Header("寵物資料")]
     public PetData data;                     // 一般欄位才可以獨立使用
-    [Header("發射物件")]
-    public GameObject bullet;
     [Header("是否正在等人")]
     public bool Wating;                      // 是否正在等人
     [Header("走路速度")]
@@ -18,8 +16,8 @@ public class Pet : MonoBehaviour
 
     private Rigidbody2D rig;
     private float hp;
-    private Animator ani;                    // 動畫控制器
-    private float timer;                     // 計時器
+    public Animator ani;                    // 動畫控制器
+    public float timer;                     // 計時器
     private HpValueManager hpValueManager;   // 血條數值管理器
     private Enemy[] enemys;                  // 敵人陣列 : 存放所有敵人
     private float[] enemysDis;               // 距離陣列 : 存放所有敵人的距離
@@ -37,6 +35,10 @@ public class Pet : MonoBehaviour
     {
         Move();     // 呼叫移動方法
         ClampPet();
+        if (Wating)
+        {
+            timer += Time.deltaTime;                // 計時器累加
+        }
     }
     /// <summary>
     /// 限制寵物走位
@@ -74,7 +76,6 @@ public class Pet : MonoBehaviour
     {
         Wating = true;                          //當開始等待 Wating=true
         ani.SetBool("走路開關", false);         // 等待動畫
-        timer += Time.deltaTime;                // 計時器累加
 
         if (timer >= data.cd)                    // 如果 計時器 >= 資料.冷卻
         {
@@ -93,7 +94,7 @@ public class Pet : MonoBehaviour
         StartCoroutine(DelayAttack());
     }
 
-    private IEnumerator DelayAttack()
+    public IEnumerator DelayAttack()
     {
         yield return new WaitForSeconds(data.attackDelay);
 

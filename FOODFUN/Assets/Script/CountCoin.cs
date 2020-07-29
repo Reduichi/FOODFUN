@@ -27,6 +27,8 @@ public class CountCoin : MonoBehaviour
     public float LevelUpAddCoin = 250f;
     [Header("寵物一號")]
     public GameObject Pet1;
+    [Header("寵物二號")]
+    public GameObject Pet2;
     public static CountCoin instance;
     private void Start()
     {
@@ -81,8 +83,19 @@ public class CountCoin : MonoBehaviour
     {
         if (Coin>150)
         {
-        Coin -= 150;
-        Instantiate(Pet1, new Vector3(-10, -0.4f,0),Quaternion.identity);
+            Coin -= 150;
+            Instantiate(Pet1, new Vector3(-10, -0.4f,0),Quaternion.identity);
+        }
+    }
+    /// <summary>
+    /// 扣除金幣並產生寵物二號
+    /// </summary>
+    public void PetTwoPay()
+    {
+        if (Coin > 250)
+        {
+            Coin -= 250;
+            Instantiate(Pet2, new Vector3(-10, -0.4f, 0), Quaternion.identity);
         }
     }
 }
