@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     public GameObject bullet;
     [Header("閃電")]
     public GameObject Lightning1, Lightning2;
+    [Header("音效區域")]
+    public AudioSource aud;
+    public AudioClip skilllight, pickcoin, skillfire, attacksound, click;
     [Header("回血冷卻時間")]
     public float RecoveryCd = 1;                 // 回血冷卻時間
     public float RecoveryTimer;             // 回血計時器
@@ -110,6 +113,7 @@ public class Player : MonoBehaviour
     {
         Player.instance.data.Stage++;
         SceneManager.LoadScene("升級介面");
+
     }
     /// <summary>
     /// 進入升級介面
@@ -117,6 +121,7 @@ public class Player : MonoBehaviour
     public void GetInUpgrade()
     {
         SceneManager.LoadScene("升級介面");
+        aud.PlayOneShot(click, 0.5f);          // 音源.播放一次(音效片段，音量)
     }
 
     [Header("現在的敵人")]
@@ -143,6 +148,7 @@ public class Player : MonoBehaviour
                 timer = 0;                      // 計時器 歸零
                 ani.SetTrigger("攻擊開關2");    // 攻擊動畫
                 tempEnemy.GetComponent<Enemy>().Hit(data.attack);
+                aud.PlayOneShot(attacksound, 0.3f);          // 音源.播放一次(音效片段，音量)
             }
             else if (timer >= data.cd && hit.collider.gameObject.transform.position.x - gameObject.transform.position.x < 6)
             {
@@ -151,6 +157,7 @@ public class Player : MonoBehaviour
                 ani.SetTrigger("攻擊開關");     // 攻擊動畫
                 tempEnemy.GetComponent<Enemy>().Hit(data.attack);
                 tempEnemy.GetComponent<Enemy>().HurtBack();
+                aud.PlayOneShot(attacksound, 0.3f);          // 音源.播放一次(音效片段，音量)
             }
         }
 
@@ -184,6 +191,7 @@ public class Player : MonoBehaviour
         temp.GetComponent<Bullet>().damage = data.attackfire;                                 // 暫存.取得元件<泛型>.傷害值 = 火球.攻擊力
         temp.GetComponent<Bullet>().player = true;
         CountTime.instance.FireSkillCoolDown();
+        aud.PlayOneShot(skillfire,0.5f);          // 音源.播放一次(音效片段，音量)
     }
     public void CreateLightning()
     {
@@ -204,6 +212,7 @@ public class Player : MonoBehaviour
         GameObject Temp2 = Instantiate(Lightning2, LightningPos2, qua);
         Temp2.AddComponent<Lightning>();                                                            // 暫存.添加元件<泛型>
         CountTime.instance.LightningSkillCoolDown();
+        aud.PlayOneShot(skilllight, 0.5f);          // 音源.播放一次(音效片段，音量)
     }
     /// <summary>
     /// 恢復血量
@@ -246,6 +255,7 @@ public class Player : MonoBehaviour
             CountCoin.instance.Coin += 100;
             data.RealMoney += 100;
             Destroy(collision.gameObject);
+            aud.PlayOneShot(pickcoin, 0.1f);          // 音源.播放一次(音效片段，音量)
         }
     }
 

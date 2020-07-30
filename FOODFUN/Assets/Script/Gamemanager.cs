@@ -9,6 +9,9 @@ public class Gamemanager : MonoBehaviour
     public PlayerData Data;
     [Header("鳳梨")]
     public GameObject pineapple;    // GameObject 可以存放預置物以及場景上的物件
+    [Header("音效區域")]
+    public AudioSource aud;
+    public AudioClip click;
     [Header("實際擁有的金錢")]
     public int RealMoney;
     public Text TheMoneyText1, TheMoneyText2, TheMoneyText3;
@@ -39,6 +42,7 @@ public class Gamemanager : MonoBehaviour
     public void NextStage()
     {
         SceneManager.LoadScene(SceneNumber);
+        aud.PlayOneShot(click, 0.5f);          // 音源.播放一次(音效片段，音量)
     }
     /// <summary>
     /// 開啟設定介面
@@ -46,6 +50,7 @@ public class Gamemanager : MonoBehaviour
     public void OpenSetInteration()
     {
         Setting.SetActive(true);
+        aud.PlayOneShot(click, 0.5f);          // 音源.播放一次(音效片段，音量)
     }
     /// <summary>
     /// 關閉設定介面
@@ -53,5 +58,6 @@ public class Gamemanager : MonoBehaviour
     public void CloseSetInteration()
     {
         Setting.SetActive(false);
+        aud.PlayOneShot(click, 0.5f);          // 音源.播放一次(音效片段，音量)
     }
 }    

@@ -30,6 +30,9 @@ public class CountCoin : MonoBehaviour
     [Header("寵物二號")]
     public GameObject Pet2;
     public static CountCoin instance;
+    [Header("音效區域")]
+    public AudioSource aud;
+    public AudioClip levelup, click;
     private void Start()
     {
         instance = this;
@@ -50,6 +53,7 @@ public class CountCoin : MonoBehaviour
         if (Coin > LevelUpNeedCoin)
         {
             LevelUpObject.SetActive(true);
+            
         }
         else LevelUpObject.SetActive(false);
     }
@@ -70,6 +74,7 @@ public class CountCoin : MonoBehaviour
             MaxCoin = 500 * Level;
             Coin -= LevelUpNeedCoin;
             LevelUpNeedCoin += LevelUpAddCoin;
+            aud.PlayOneShot(levelup, 0.5f);          // 音源.播放一次(音效片段，音量)
         }
         if (Level == 10)
         {
@@ -85,6 +90,7 @@ public class CountCoin : MonoBehaviour
         {
             Coin -= 150;
             Instantiate(Pet1, new Vector3(-10, -0.4f,0),Quaternion.identity);
+            aud.PlayOneShot(click, 0.5f);          // 音源.播放一次(音效片段，音量)
         }
     }
     /// <summary>
@@ -96,6 +102,7 @@ public class CountCoin : MonoBehaviour
         {
             Coin -= 250;
             Instantiate(Pet2, new Vector3(-10, -0.4f, 0), Quaternion.identity);
+            aud.PlayOneShot(click, 0.5f);          // 音源.播放一次(音效片段，音量)
         }
     }
 }

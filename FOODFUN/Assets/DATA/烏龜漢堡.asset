@@ -15,7 +15,7 @@ MonoBehaviour:
   speed: 100
   hp: 5000
   hpMax: 5000
-  attack: 20
+  attack: 50
   cd: 2
   stopDistance: 3
   WalkDelay: 3
