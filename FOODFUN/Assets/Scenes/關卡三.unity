@@ -1170,9 +1170,9 @@ MonoBehaviour:
   aud: {fileID: 463438857}
   click: {fileID: 8300000, guid: 3f687785aafb3854f9537022d770a19c, type: 3}
   RealMoney: 0
-  TheMoneyText1: {fileID: 0}
-  TheMoneyText2: {fileID: 0}
-  TheMoneyText3: {fileID: 0}
+  TheMoneyText1: {fileID: 69052375}
+  TheMoneyText2: {fileID: 69052375}
+  TheMoneyText3: {fileID: 69052375}
   SceneNumber: 0
   Setting: {fileID: 999070667}
 --- !u!114 &463438853

@@ -625,7 +625,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &382069020
@@ -4170,6 +4170,21 @@ PrefabInstance:
       propertyPath: Setting
       value: 
       objectReference: {fileID: 2089215805}
+    - target: {fileID: 2318476054702737247, guid: f2925ef297bde6741a918dac11a0446f,
+        type: 3}
+      propertyPath: TheMoneyText1
+      value: 
+      objectReference: {fileID: 69052375}
+    - target: {fileID: 2318476054702737247, guid: f2925ef297bde6741a918dac11a0446f,
+        type: 3}
+      propertyPath: TheMoneyText2
+      value: 
+      objectReference: {fileID: 69052375}
+    - target: {fileID: 2318476054702737247, guid: f2925ef297bde6741a918dac11a0446f,
+        type: 3}
+      propertyPath: TheMoneyText3
+      value: 
+      objectReference: {fileID: 69052375}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2925ef297bde6741a918dac11a0446f, type: 3}
 --- !u!1001 &8960559690450535362
