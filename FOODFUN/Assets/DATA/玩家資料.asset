@@ -31,5 +31,5 @@ MonoBehaviour:
   PlayerNeed: 1000
   FireNeed: 1000
   LightningNeed: 1000
-  Stage: 1
+  Stage: 0
   RealMoney: 0
